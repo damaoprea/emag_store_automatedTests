@@ -31,6 +31,7 @@ public class AppTest {
 	private ProductListPage productListPage;
 	private ProductDetailsPage productDetailsPage;
 	private BascketDetailsPage bascketDetailsPage;
+	private ClickOnElementTest clickOnElementTest;
 
 	@Before
 	public void setUp() throws InterruptedException{
@@ -42,7 +43,8 @@ public class AppTest {
 		productListPage = new ProductListPage(driver);
 		productDetailsPage = new ProductDetailsPage(driver);
 		bascketDetailsPage = new BascketDetailsPage(driver);
-		
+		clickOnElementTest = new ClickOnElementTest(driver);
+	
 	}
 	
 	@After
@@ -114,20 +116,33 @@ public class AppTest {
 //		assertFalse(utilities.isElementPresent(productDetailsPage.purchasedModal));
 //	}
 	
+//	@Test
+//	public void verifyBascket() {
+//		homePage.search("samsung");
+//		List<WebElement> items = driver.findElements(By.cssSelector("div.card-item"));
+//		int actualItemsNumber = items.size();
+//		Random rand = new Random();
+//		int randomItem = rand.nextInt(actualItemsNumber);
+//		items.get(randomItem).click();
+//		productDetailsPage.addToBasketButton.click();
+//		productDetailsPage.seeBascketDetails.click();
+//		
+//		String actualCartItems = bascketDetailsPage.bascketIcon.getText();
+//		assertEquals("1", actualCartItems);
+//		
+//	}
+	
 	@Test
-	public void verifyBascket() {
+	public void verifyProductsPriceAndName(){
 		homePage.search("samsung");
-		List<WebElement> items = driver.findElements(By.cssSelector("div.card-item"));
-		int actualItemsNumber = items.size();
-		Random rand = new Random();
-		int randomItem = rand.nextInt(actualItemsNumber);
-		items.get(randomItem).click();
-		productDetailsPage.addToBasketButton.click();
-		productDetailsPage.seeBascketDetails.click();
-		
-		String actualCartItems = bascketDetailsPage.bascketIcon.getText();
-		assertEquals("1", actualCartItems);
-		
+		List<WebElement> items = driver.findElements(By.xpath("//div[@class=\"card-v2\"]"));
+		String searchProductName = clickOnElementTest.searchScrenProductName.getText();
+		String searchProductPrice = clickOnElementTest.searchScreenProductPrice.getText();
+		items.get(0).click();
+		String detailsProductName = clickOnElementTest.productDetailsPageProductName.getText();
+		String detailsProductPrice = clickOnElementTest.productDetailsPageProductPrice.getText();
+		assertEquals(searchProductName,detailsProductName);
+		assertEquals(searchProductPrice,detailsProductPrice);
 	}
 }
 
